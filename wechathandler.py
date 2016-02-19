@@ -59,7 +59,7 @@ def handler(body, signature, timestamp, nonce):
     if isinstance(message, TextMessage):
         logger.debug("handling: %s", message.content)
         content = message.content
-        response = text_handler(content, target)
+        response = text_handler(content, source)
     elif isinstance(message, ImageMessage):
         logger.debug("handling: mediaId: %s, picurl: %s", message.media_id, message.picurl)
         response = wechat.response_image(message.media_id)
