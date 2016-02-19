@@ -23,8 +23,23 @@ def text_handler(content):
         q['title'] = 'questionnaire'
         q['description'] = 'This is a questionnaire sample'
         q['url'] = 'http://inaiping.wang'
-        logger.debug(json.dump([q]))
-        return  wechat.response_news(json.dump([q]))
+        return  wechat.response_news([q])
+    elif 'test' == content:
+        articles = [{
+            'title': u'第一条新闻标题',
+            'description': u'第一条新闻描述，这条新闻没有预览图',
+            'url': u'http://www.google.com.hk/',
+        }, {
+            'title': u'第二条新闻标题, 这条新闻无描述',
+            'picurl': u'http://doraemonext.oss-cn-hangzhou.aliyuncs.com/test/wechat-test.jpg',
+            'url': u'http://www.github.com/',
+        }, {
+            'title': u'第三条新闻标题',
+            'description': u'第三条新闻描述',
+            'picurl': u'http://doraemonext.oss-cn-hangzhou.aliyuncs.com/test/wechat-test.jpg',
+            'url': u'http://www.v2ex.com/',
+        }]
+        return wechat.response_news(articles)
     return wechat.response_text(resp)
 
 def handler(body, signature, timestamp, nonce):
