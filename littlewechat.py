@@ -34,8 +34,10 @@ def little_wechat():
     timestamp = request.args.get('timestamp')
     nonce = request.args.get('nonce')
     echostr = request.args.get('echostr')
-    logger.debug("request with signature:%s timestamp:%s nonce:%s", signature, timestamp, nonce)
+    logger.debug("request with signature:%s timestamp:%s nonce:%s echostr:%s", signature, timestamp, nonce, echostr)
     if wechat.check_signature(signature, timestamp, nonce):
+        if echostr:
+            return echostr
         return wechathandler.handler(request.data, signature, timestamp, nonce)
     else:
         return "validate failed"
