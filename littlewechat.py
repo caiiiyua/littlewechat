@@ -4,6 +4,14 @@ from wechat_sdk import WechatConf
 from wechat_sdk import WechatBasic
 import wechathandler
 
+import logging
+from logging import handlers
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger('wechat')
+loghandler = logging.StreamHandler()
+loghandler.setFormatter(logging.Formatter('[%(asctime)s] [%(levelname)s] [%(message)s]'))
+logger.addHandler(loghandler)
+
 app = Flask(__name__)
 
 conf = WechatConf(
@@ -26,10 +34,12 @@ def little_wechat():
     timestamp = request.args.get('timestamp')
     nonce = request.args.get('nonce')
     echostr = request.args.get('echostr')
+    logger.debug("request with signature:%s timestamp:%s nonce:%s", signature, timestamp, nonce)
     if wechat.check_signature(signature, timestamp, nonce):
         return wechathandler.handler(request.data, signature, timestamp, nonce)
     else:
         return "validate failed"
 
 if __name__ == '__main__':
+    app.debug = True
     app.run()

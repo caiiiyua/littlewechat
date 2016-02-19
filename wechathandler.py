@@ -12,6 +12,7 @@
 """
 
 from littlewechat import wechat
+from littlewechat import logger
 
 def text_handler():
     pass
@@ -19,6 +20,7 @@ def text_handler():
 def handler(body, signature, timestamp, nonce):
     wechat.parse_data(body, signature, timestamp, nonce)
     message = wechat.get_message()
+    logger.debug("handling: %s", message.content)
 
     response = None
     if message.type == 'text':
