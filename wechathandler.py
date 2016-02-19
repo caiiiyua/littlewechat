@@ -7,7 +7,7 @@
 @contact: caiiiyua@gmail.com
 @site: 
 @software: PyCharm
-@file: wechat_handler.py
+@file: wechathandler.py
 @time: 16/2/17 下午11:10
 """
 

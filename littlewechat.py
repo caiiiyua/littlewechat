@@ -2,7 +2,7 @@
 from flask import Flask, request
 from wechat_sdk import WechatConf
 from wechat_sdk import WechatBasic
-from wechat_handler import handler
+import wechathandler
 
 app = Flask(__name__)
 
@@ -27,7 +27,7 @@ def little_wechat():
     nonce = request.args.get('nonce')
     echostr = request.args.get('echostr')
     if wechat.check_signature(signature, timestamp, nonce):
-        return handler(request.data, signature, timestamp, nonce)
+        return wechathandler.handler(request.data, signature, timestamp, nonce)
     else:
         return "validate failed"
 
