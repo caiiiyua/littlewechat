@@ -28,7 +28,7 @@ wechat = WechatBasic(conf=conf)
 def hello_world():
     return 'Hello World!'
 
-@app.route('/little')
+@app.route('/little', methods=["GET", "POST"])
 def little_wechat():
     signature = request.args.get('signature')
     timestamp = request.args.get('timestamp')
@@ -44,4 +44,4 @@ def little_wechat():
 
 if __name__ == '__main__':
     app.debug = True
-    app.run()
+    app.run(port=8000)
