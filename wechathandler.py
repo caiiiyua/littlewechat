@@ -21,15 +21,16 @@ def handler(body, signature, timestamp, nonce):
     logger.debug("request body: %s", body)
     wechat.parse_data(body, signature, timestamp, nonce)
     message = wechat.get_message()
-    logger.debug("handling: %s", message.content)
 
     response = None
     if message.type == 'text':
+        logger.debug("handling: %s", message.content)
         response = wechat.response_text(message.content)
     elif message.type == 'image':
-        response = wechat.response_text('picture')
+        logger.debug("handling: mediaId: %s, picurl: %s", message.MediaId, message.PicUrl)
+        response = wechat.response_image(message.MediaId)
     elif message.type == 'audio':
-        response = wechat.response_text('audio')
+        response = wechat.response_text('unsupported yet :-(')
     else:
         response = wechat.response_text('unknown')
 
