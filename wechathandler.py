@@ -16,12 +16,13 @@ from littlewechat import logger
 from wechat_sdk.messages import TextMessage, ImageMessage, EventMessage
 import json
 
-def text_handler(content):
+def text_handler(content, userid):
     resp = content
     if 'survey' == content:
+        userinfo = wechat.get_user_info(userid)
         q = {}
         q['title'] = 'questionnaire'
-        q['description'] = 'This is a questionnaire sample'
+        q['description'] = userinfo.text
         q['url'] = 'http://inaiping.wang'
         return  wechat.response_news([q])
     elif 'test' == content:
@@ -47,11 +48,18 @@ def handler(body, signature, timestamp, nonce):
     wechat.parse_data(body, signature, timestamp, nonce)
     message = wechat.get_message()
 
+    id = wechat.message.id          # 对应于 XML 中的 MsgId
+    target = wechat.message.target  # 对应于 XML 中的 ToUserName
+    source = wechat.message.source  # 对应于 XML 中的 FromUserName
+    time = wechat.message.time      # 对应于 XML 中的 CreateTime
+    type = wechat.message.type      # 对应于 XML 中的 MsgType
+    raw = wechat.message.raw        # 原始 XML 文本，方便进行其他分析
+
     response = None
     if isinstance(message, TextMessage):
         logger.debug("handling: %s", message.content)
         content = message.content
-        response = text_handler(content)
+        response = text_handler(content, target)
     elif isinstance(message, ImageMessage):
         logger.debug("handling: mediaId: %s, picurl: %s", message.media_id, message.picurl)
         response = wechat.response_image(message.media_id)
