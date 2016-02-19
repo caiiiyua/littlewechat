@@ -18,6 +18,7 @@ def text_handler():
     pass
 
 def handler(body, signature, timestamp, nonce):
+    logger.debug("request body: %s", body)
     wechat.parse_data(body, signature, timestamp, nonce)
     message = wechat.get_message()
     logger.debug("handling: %s", message.content)
