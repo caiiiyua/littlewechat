@@ -14,9 +14,18 @@
 from littlewechat import wechat
 from littlewechat import logger
 from wechat_sdk.messages import TextMessage, ImageMessage, EventMessage
+import json
 
-def text_handler():
-    pass
+def text_handler(content):
+    resp = content
+    if 'survey' == content:
+        q = {}
+        q['title'] = 'questionnaire'
+        q['description'] = 'This is a questionnaire sample'
+        q['url'] = 'http://inaiping.wang'
+        logger.debug(json.dump([q]))
+        return  wechat.response_news(json.dump([q]))
+    return wechat.response_text(resp)
 
 def handler(body, signature, timestamp, nonce):
     logger.debug("request body: %s", body)
@@ -27,7 +36,7 @@ def handler(body, signature, timestamp, nonce):
     if isinstance(message, TextMessage):
         logger.debug("handling: %s", message.content)
         content = message.content
-        response = wechat.response_text(content)
+        response = text_handler(content)
     elif isinstance(message, ImageMessage):
         logger.debug("handling: mediaId: %s, picurl: %s", message.media_id, message.picurl)
         response = wechat.response_image(message.media_id)
