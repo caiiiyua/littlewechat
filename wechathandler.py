@@ -82,7 +82,7 @@ def handler(body, signature, timestamp, nonce):
                 query = Query(WeUsers)
                 query.equal_to('openid', userinfo.get('openid'))
                 logger.debug(query.find())
-                if not query.find():
+                if len(query.find()) <= 0:
                     wuser = WeUsers()
                     wuser.openid = userinfo.get('openid')
                     wuser.city = userinfo.get('city')
