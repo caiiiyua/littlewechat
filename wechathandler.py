@@ -14,6 +14,7 @@
 from littlewechat import wechat
 from littlewechat import logger
 from wechat_sdk.messages import TextMessage, ImageMessage, EventMessage
+from leancloud import Query
 
 def get_question_url(appid, qid):
     qurl = 'http://inaiping.wang/questions/' + str(qid)
@@ -76,19 +77,24 @@ def handler(body, signature, timestamp, nonce):
             ticket = wechat.message.ticket                  # 对应于 XML 中的 Ticket (普通关注事件时此值为 None)
             if source:
                 userinfo = wechat.get_user_info(source)
-                logger.debug("typeof(%s) is %s", userinfo, type(userinfo))
+                logger.debug(userinfo)
                 from weuser.weusers import WeUsers
-                wuser = WeUsers()
-                wuser.openid = userinfo.get('openid')
-                wuser.city = userinfo.get('city')
-                wuser.nickname = userinfo.get('nickname')
-                wuser.headimgurl = userinfo.get('headimgurl')
-                wuser.province = userinfo.get('province')
-                wuser.sex = userinfo.get('sex')
-                wuser.unionid = userinfo.get('unionid')
-                wuser.save()
+                query = Query(WeUsers)
+                query.equal_to('openid', userinfo.get('openid'))
+                if not query.find():
+                    wuser = WeUsers()
+                    wuser.openid = userinfo.get('openid')
+                    wuser.city = userinfo.get('city')
+                    wuser.nickname = userinfo.get('nickname')
+                    wuser.headimgurl = userinfo.get('headimgurl')
+                    wuser.province = userinfo.get('province')
+                    wuser.sex = userinfo.get('sex')
+                    wuser.unionid = userinfo.get('unionid')
+                    wuser.save()
+                else:
+                    logger.debug('%s had already been subscribed', userinfo.get('nickname'))
         elif wechat.message.type == 'unsubscribe':  # 取消关注事件（无可用私有信息）
-            pass
+            logger.debug('%s unsubscribe', source)
         elif wechat.message.type == 'scan':  # 用户已关注时的二维码扫描事件
             key = wechat.message.key                        # 对应于 XML 中的 EventKey
             ticket = wechat.message.ticket                  # 对应于 XML 中的 Ticket
