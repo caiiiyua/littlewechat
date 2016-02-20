@@ -66,11 +66,12 @@ def questions(qid):
     from weuser.weusers import WeUsers
     query = Query(WeUsers)
     query.equal_to('openid', openid)
-    weuser = None
-    if len(query.find()) > 0:
-        weuser = query.first()
-
-    return "questionnaire with id: %s and %s" % (qid, weuser)
+    wuser = query.find()
+    if len(wuser) > 0:
+        wuser = wuser[0]
+        return "questionnaire with id: %s and %s" % (qid, wuser.nickname)
+    else:
+        return "questionnaire with id: %s and no available user" % qid
 
 
 if __name__ == '__main__':
