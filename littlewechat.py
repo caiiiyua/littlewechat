@@ -6,6 +6,7 @@ import wechathandler
 import leancloud
 import requests
 from leancloud import Query
+import json
 
 import logging
 from logging import handlers
@@ -57,8 +58,8 @@ def questions(qid):
         url = str.format('https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code'
                          % (wechat.conf.appid, wechat.conf.appsecret, code))
     resp = requests.get(url)
-    logger.debug(resp.text)
-    authorize_result = resp.text
+    logger.debug(type(resp.text))
+    authorize_result = json.loads(resp.text)
     openid = authorize_result.get('openid')
     userinfo = wechat.get_user_info(openid)
     logger.debug(userinfo)
