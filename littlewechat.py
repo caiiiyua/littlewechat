@@ -61,11 +61,11 @@ def questions(qid):
     logger.debug(type(resp.text))
     authorize_result = json.loads(resp.text)
     openid = authorize_result.get('openid')
-    userinfo = wechat.get_user_info(openid)
-    logger.debug(userinfo)
+    # userinfo = wechat.get_user_info(openid)
+    logger.debug(openid)
     from weuser.weusers import WeUsers
     query = Query(WeUsers)
-    query.equal_to('openid', userinfo.get('openid'))
+    query.equal_to('openid', openid)
     weuser = None
     if len(query.find()) > 0:
         weuser = query.first()
