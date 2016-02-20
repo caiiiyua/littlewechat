@@ -17,8 +17,8 @@ from wechat_sdk.messages import TextMessage, ImageMessage, EventMessage
 
 def get_question_url(appid, qid):
     qurl = 'http://inaiping.wang/questions/' + str(qid)
-    authorize_url = str.format('https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect',
-               appid, qurl)
+    authorize_url = str.format('https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect' %
+                               (appid, qurl))
     logger.debug(authorize_url)
     return authorize_url
 def text_handler(content, userid):
@@ -73,6 +73,19 @@ def handler(body, signature, timestamp, nonce):
         if wechat.message.type == 'subscribe':  # 关注事件(包括普通关注事件和扫描二维码造成的关注事件)
             key = wechat.message.key                        # 对应于 XML 中的 EventKey (普通关注事件时此值为 None)
             ticket = wechat.message.ticket                  # 对应于 XML 中的 Ticket (普通关注事件时此值为 None)
+            if source:
+                userinfo = wechat.get_user_info(source)
+                logger.debug("typeof(%s) is %s", userinfo, type(userinfo))
+                from weuser.weusers import WeUsers
+                wuser = WeUsers()
+                wuser.openid = userinfo.get('openid')
+                wuser.city = userinfo.get('city')
+                wuser.nickname = userinfo.get('nickname')
+                wuser.headimgurl = userinfo.get('headimgurl')
+                wuser.province = userinfo.get('province')
+                wuser.sex = userinfo.get('sex')
+                wuser.unionid = userinfo.get('unionid')
+                wuser.save()
         elif wechat.message.type == 'unsubscribe':  # 取消关注事件（无可用私有信息）
             pass
         elif wechat.message.type == 'scan':  # 用户已关注时的二维码扫描事件
