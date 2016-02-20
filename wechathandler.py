@@ -117,5 +117,5 @@ def handler(body, signature, timestamp, nonce):
     else:
         response = wechat.response_text('unsupported yet :-(')
     if not response:
-        response = wechat.request_text('unsupported yet :-(')
+        response = wechat.response_text('unsupported yet :-(')
     return response
