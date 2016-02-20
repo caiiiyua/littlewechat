@@ -18,7 +18,7 @@ from leancloud import Query
 
 def get_question_url(appid, qid):
     qurl = 'http://inaiping.wang/questions/' + str(qid)
-    authorize_url = str.format('https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect' %
+    authorize_url = str.format('https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect' %
                                (appid, qurl))
     logger.debug(authorize_url)
     return authorize_url

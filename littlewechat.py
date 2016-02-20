@@ -4,6 +4,8 @@ from wechat_sdk import WechatConf
 from wechat_sdk import WechatBasic
 import wechathandler
 import leancloud
+import requests
+from leancloud import Query
 
 import logging
 from logging import handlers
@@ -50,7 +52,21 @@ def little_wechat():
 @app.route('/questions/<qid>', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def questions(qid):
     logger.debug(request.args)
-    return "questionnaire with id: %s" % qid
+    code = request.args.get('code')
+    if code:
+        url = str.format('https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code'
+                         % (wechat.conf.appid, wechat.conf.appsecret, code))
+    resp = requests.get(url)
+    logger.debug(resp.text)
+    authorize_result = resp.text
+    openid = authorize_result.get('openid')
+    userinfo = wechat.get_user_info(openid)
+    logger.debug(userinfo)
+    from weuser.weusers import WeUsers
+    query = Query(WeUsers)
+    query.equal_to('openid', userinfo.get('openid'))
+    logger.debug(query.find())
+    return "questionnaire with id: %s and %s" % (qid. query.find())
 
 
 if __name__ == '__main__':
