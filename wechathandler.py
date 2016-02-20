@@ -81,8 +81,8 @@ def handler(body, signature, timestamp, nonce):
                 from weuser.weusers import WeUsers
                 query = Query(WeUsers)
                 query.equal_to('openid', userinfo.get('openid'))
-                logger.debug(query.first())
-                if not query.first():
+                logger.debug(query.find())
+                if not query.find():
                     wuser = WeUsers()
                     wuser.openid = userinfo.get('openid')
                     wuser.city = userinfo.get('city')
