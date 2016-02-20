@@ -81,7 +81,8 @@ def handler(body, signature, timestamp, nonce):
                 from weuser.weusers import WeUsers
                 query = Query(WeUsers)
                 query.equal_to('openid', userinfo.get('openid'))
-                if not query.find():
+                logger.debug(query.first())
+                if not query.first():
                     wuser = WeUsers()
                     wuser.openid = userinfo.get('openid')
                     wuser.city = userinfo.get('city')
@@ -115,5 +116,6 @@ def handler(body, signature, timestamp, nonce):
 
     else:
         response = wechat.response_text('unsupported yet :-(')
-
+    if not response:
+        response = wechat.request_text('unsupported yet :-(')
     return response
