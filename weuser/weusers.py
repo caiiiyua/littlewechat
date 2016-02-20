@@ -19,7 +19,7 @@ class WeUsers(Object):
         return self.get('openid')
     @openid.setter
     def openid(self, openid):
-        return self.set('opendid', openid)
+        return self.set('openid', openid)
 
     @property
     def nickname(self):
