@@ -94,6 +94,7 @@ def handler(body, signature, timestamp, nonce):
                     wuser.save()
                 else:
                     logger.debug('%s had already been subscribed', userinfo.get('nickname'))
+                response = wechat.response_text('Welcome to playground:-)')
         elif wechat.message.type == 'unsubscribe':  # 取消关注事件（无可用私有信息）
             logger.debug('%s unsubscribe', source)
         elif wechat.message.type == 'scan':  # 用户已关注时的二维码扫描事件
