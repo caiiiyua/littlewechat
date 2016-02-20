@@ -3,6 +3,7 @@ from flask import Flask, request
 from wechat_sdk import WechatConf
 from wechat_sdk import WechatBasic
 import wechathandler
+import leancloud
 
 import logging
 from logging import handlers
@@ -13,6 +14,8 @@ loghandler.setFormatter(logging.Formatter('[%(asctime)s] [%(levelname)s] [%(mess
 logger.addHandler(loghandler)
 
 app = Flask(__name__)
+# init leancloud sdk
+leancloud.init('gbGQrJza12wVi05jnSFejYiB-gzGzoHsz', 'V0obuYelEbFNm2c8Sp81HOrn')
 
 conf = WechatConf(
     token='littlewechat',

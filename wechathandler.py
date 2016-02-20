@@ -14,7 +14,6 @@
 from littlewechat import wechat
 from littlewechat import logger
 from wechat_sdk.messages import TextMessage, ImageMessage, EventMessage
-import json
 
 def text_handler(content, userid):
     resp = content
@@ -29,7 +28,7 @@ def text_handler(content, userid):
         articles = [{
             'title': u'第一条新闻标题',
             'description': u'第一条新闻描述，这条新闻没有预览图',
-            'url': u'http://www.google.com.hk/',
+            'url': u'http://www.baidu.com/',
         }, {
             'title': u'第二条新闻标题, 这条新闻无描述',
             'picurl': u'http://doraemonext.oss-cn-hangzhou.aliyuncs.com/test/wechat-test.jpg',
