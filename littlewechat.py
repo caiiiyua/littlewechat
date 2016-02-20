@@ -66,8 +66,11 @@ def questions(qid):
     from weuser.weusers import WeUsers
     query = Query(WeUsers)
     query.equal_to('openid', userinfo.get('openid'))
-    logger.debug(query.find())
-    return "questionnaire with id: %s and %s" % (qid. query.find())
+    weuser = None
+    if len(query.find()) > 0:
+        weuser = query.first()
+
+    return "questionnaire with id: %s and %s" % (qid, weuser)
 
 
 if __name__ == '__main__':
