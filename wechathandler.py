@@ -69,6 +69,7 @@ def handler(body, signature, timestamp, nonce):
         logger.debug("handling: mediaId: %s, picurl: %s", message.media_id, message.picurl)
         response = wechat.response_image(message.media_id)
     elif isinstance(message, EventMessage):
+        logger.debug("handling eventMessage: %s", message.type)
         key = None
         if wechat.message.type == 'subscribe':  # 关注事件(包括普通关注事件和扫描二维码造成的关注事件)
             key = wechat.message.key                        # 对应于 XML 中的 EventKey (普通关注事件时此值为 None)
