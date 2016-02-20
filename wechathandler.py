@@ -15,14 +15,20 @@ from littlewechat import wechat
 from littlewechat import logger
 from wechat_sdk.messages import TextMessage, ImageMessage, EventMessage
 
+def get_question_url(appid, qid):
+    qurl = 'http://inaiping.wang/questions/' + str(qid)
+    authorize_url = str.format('https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect',
+               appid, qurl)
+    logger.debug(authorize_url)
+    return authorize_url
 def text_handler(content, userid):
     resp = content
     if 'survey' == content:
         userinfo = wechat.get_user_info(userid)
         q = {}
         q['title'] = 'questionnaire'
-        q['description'] = userinfo.text
-        q['url'] = 'http://inaiping.wang'
+        q['description'] = userinfo
+        q['url'] = get_question_url(wechat.conf.appid, 1)
         return  wechat.response_news([q])
     elif 'test' == content:
         articles = [{

@@ -47,6 +47,12 @@ def little_wechat():
     else:
         return "validate failed"
 
+@app.route('/questions/<qid>', methods=['GET', 'POST', 'PUT', 'DELETE'])
+def questions(qid):
+    logger.debug(request.args)
+    return "questionnaire with id: %s" % qid
+
+
 if __name__ == '__main__':
     app.debug = True
     app.run(port=8000)
