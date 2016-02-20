@@ -56,7 +56,7 @@ def questions(qid):
     code = request.args.get('code')
     if code:
         url = str.format('https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code'
-                         % (wechat.conf.appid, wechat.conf.appsecret, code))
+                         % (wechat.conf.appid, wechat.conf.appsecret, str(code)))
     resp = requests.get(url)
     logger.debug(type(resp.text))
     authorize_result = json.loads(resp.text)
