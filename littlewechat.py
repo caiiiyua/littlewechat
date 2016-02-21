@@ -56,9 +56,10 @@ def questions(qid):
     wuser = validate_weuser()
     if wuser:
         logger.debug("questionnaire with id: %s and %s" % (qid, wuser.nickname))
-        title = str.format("%s's Questionnaire" % wuser.nickname)
+        title = str.format("%s's Questionnaire" % wuser.nickname.encode('utf-8'))
+        logger.debug(type(title))
 
-        return render_template('question.html', title=title, name=wuser.nickname, qid=qid)
+        return render_template('question.html', title=wuser.nickname, name=wuser.nickname, qid=qid)
     else:
         redirect_url = wechathandler.get_question_info_url(wechat.conf.appid, qid)
         logger.debug("questionnaire with id: %s and no available user" % qid)
