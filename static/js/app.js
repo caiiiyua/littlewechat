@@ -1,16 +1,8 @@
 /**
  * Created by pp on 16/2/21.
  */
-'use strict'
+'use strict';
+var component = require('./h1.js');
 
-var React = require('react')
 
-class Hello extends React.Component {
-    render() {
-        return (
-          <h2>Hello React</h2>
-        );
-    }
-}
-
-React.render(<Hello/>, document.getElementById('content2'));
+document.body.appendChild(component());

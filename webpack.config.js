@@ -10,10 +10,5 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'static'),
         filename: 'bundle.js'
-    },
-    module: {
-        loaders: [
-            { test: /\.js?$/, loaders: ['jsx?harmony']}
-        ]
-    },
+    }
 };

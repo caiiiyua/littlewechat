@@ -44,10 +44,31 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	(function webpackMissingModule() { throw new Error("Cannot find module \"/Users/pp/Documents/webdev/littlewechat/static/js/app.js\""); }());
-	(function webpackMissingModule() { throw new Error("Cannot find module \"/Users/pp/Documents/webdev/littlewechat/static/js/app.js\""); }());
-	(function webpackMissingModule() { throw new Error("Cannot find module \"static/bundle.js\""); }());
+	/**
+	 * Created by pp on 16/2/21.
+	 */
+	'use strict';
+	var component = __webpack_require__(1);
 
+
+	document.body.appendChild(component());
+
+/***/ },
+/* 1 */
+/***/ function(module, exports) {
+
+	/**
+	 * Created by pp on 16/2/21.
+	 */
+	'use strict';
+
+	module.exports = function () {
+	    var element = document.createElement('h1');
+
+	    element.innerHTML = 'Hello world';
+
+	    return element;
+	};
 
 /***/ }
 /******/ ]);
