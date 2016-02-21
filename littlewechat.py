@@ -60,7 +60,7 @@ def questions(qid):
     wuser = validate_weuser()
     if wuser:
         logger.debug("questionnaire with id: %s and %s" % (qid, wuser.nickname))
-        title = str.format("%s's Questionnaire" % wuser.nickname)
+        title = u"{name}'s Questionnaire".format(name=wuser.nickname)
         logger.debug(type(title))
 
         return render_template('question.html', title=title, name=wuser.nickname, qid=qid)
