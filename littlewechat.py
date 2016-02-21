@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from flask import Flask, request, redirect
+from flask import Flask, request, redirect, render_template
 from wechat_sdk import WechatConf
 from wechat_sdk import WechatBasic
 import wechathandler
@@ -56,6 +56,9 @@ def questions(qid):
     wuser = validate_weuser()
     if wuser:
         return "questionnaire with id: %s and %s" % (qid, wuser.nickname)
+        title = str.format("%s's Questionnaire" % wuser.nickname)
+
+        return render_template('question.html', title=title, name=wuser.nickname, qid=qid)
     else:
         redirect_url = wechathandler.get_question_info_url(wechat.conf.appid, qid)
         logger.debug("questionnaire with id: %s and no available user" % qid)
