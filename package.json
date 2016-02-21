@@ -1,0 +1,24 @@
+{
+  "name": "littlewechat",
+  "version": "1.0.0",
+  "description": "Little wechat server",
+  "main": "webpack.config.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/caiiiyua/littlewechat.git"
+  },
+  "keywords": [
+    "wechat"
+  ],
+  "author": "caiiiyua",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/caiiiyua/littlewechat/issues"
+  },
+  "homepage": "https://github.com/caiiiyua/littlewechat#readme"
+}

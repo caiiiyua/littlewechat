@@ -1,18 +1,16 @@
 /**
  * Created by pp on 16/2/21.
  */
-<script type="text/jsx">
+'use strict'
 
-      /*** @jsx React.DOM */
+var React = require('react')
 
-      var helloWorld2 = React.createClass({
-        render: function() {
-          return (<h1>Greetings, from Hello Another world!</h1>)
-        }
-      });
+class Hello extends React.Component {
+    render() {
+        return (
+          <h2>Hello React</h2>
+        );
+    }
+}
 
-      React.render(
-        React.createElement(helloWorld2, null),
-        document.getElementById('content2')
-      );
-</script>
+React.render(<Hello/>, document.getElementById('content2'));
