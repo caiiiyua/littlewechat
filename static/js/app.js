@@ -1,19 +1,18 @@
 /**
  * Created by pp on 16/2/21.
  */
-
 <script type="text/jsx">
 
       /*** @jsx React.DOM */
 
-      var helloWorld = React.createClass({
+      var helloWorld2 = React.createClass({
         render: function() {
-          return (<h2>Greetings, from Real Python!</h2>)
+          return (<h1>Greetings, from Hello Another world!</h1>)
         }
-      })
+      });
 
       React.render(
-        React.createElement(helloWorld, null),
+        React.createElement(helloWorld2, null),
         document.getElementById('content2')
-      )
-</script>;
+      );
+</script>
