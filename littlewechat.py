@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from flask import Flask, request
+from flask import Flask, request, redirect
 from wechat_sdk import WechatConf
 from wechat_sdk import WechatBasic
 import wechathandler
@@ -53,10 +53,21 @@ def little_wechat():
 @app.route('/questions/<qid>', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def questions(qid):
     logger.debug(request.args)
+    wuser = validate_weuser()
+    if wuser:
+        return "questionnaire with id: %s and %s" % (qid, wuser.nickname)
+    else:
+        redirect_url = wechathandler.get_question_info_url(wechat.conf.appid, qid)
+        logger.debug("questionnaire with id: %s and no available user" % qid)
+        return redirect(redirect_url)
+
+
+def validate_weuser():
     code = request.args.get('code')
     if code:
-        url = str.format('https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code'
-                         % (wechat.conf.appid, wechat.conf.appsecret, str(code)))
+        url = str.format(
+            'https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code'
+            % (wechat.conf.appid, wechat.conf.appsecret, str(code)))
     resp = requests.get(url)
     logger.debug(type(resp.text))
     authorize_result = json.loads(resp.text)
@@ -69,9 +80,10 @@ def questions(qid):
     wuser = query.find()
     if len(wuser) > 0:
         wuser = wuser[0]
-        return "questionnaire with id: %s and %s" % (qid, wuser.nickname)
     else:
-        return "questionnaire with id: %s and no available user" % qid
+        logger.debug('try to retrieve userinfo')
+        wuser = wechathandler.retrieve_weuser(openid)
+    return wuser
 
 
 if __name__ == '__main__':
