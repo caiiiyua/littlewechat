@@ -65,9 +65,10 @@ def questions(qid):
 
         return render_template('question.html', title=title, name=wuser.nickname, qid=qid)
     else:
-        redirect_url = wechathandler.get_question_info_url(wechat.conf.appid, qid)
-        logger.debug("questionnaire with id: %s and no available user" % qid)
-        return redirect(redirect_url)
+        return render_template('question.html', title="Test", name="No name", qid=qid)
+        # redirect_url = wechathandler.get_question_info_url(wechat.conf.appid, qid)
+        # logger.debug("questionnaire with id: %s and no available user" % qid)
+        # return redirect(redirect_url)
 
 
 def validate_weuser():
@@ -76,6 +77,8 @@ def validate_weuser():
         url = str.format(
             'https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code'
             % (wechat.conf.appid, wechat.conf.appsecret, str(code)))
+    else:
+        return None
     resp = requests.get(url)
     logger.debug(type(resp.text))
     authorize_result = json.loads(resp.text)
