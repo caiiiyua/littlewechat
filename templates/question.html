@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
     <link rel="stylesheet" type="text/css" href="/static/css/app.css">
+    <link rel="stylesheet" href="/static/css/weui.min.css"/>
     <title>{{ title }}</title>
 </head>
-<body ontouchstart>
+<body>
 <div id="container">
     {% if name %}
         <h1>Questionnaire with id: {{ qid }} owned by {{ name }}!</h1>
@@ -14,7 +15,6 @@
         <h1>Questionnaire with id: {{ qid }} and no available user!</h1>
     {% endif %}
     <div id="content"></div>
-    <div id="content2"></div>
 </div>
 <script src="/static/bundle.js"></script>
 </body>

@@ -1,16 +1,22 @@
 /**
  * Created by pp on 16/2/21.
  */
-'use strict'
 
-var React = require('react')
+import React from 'react';
+import ReactDOM from 'react-dom';
+import WeUI from 'react-weui';
+import 'weui';
 
-class Hello extends React.Component {
+const {Button} = WeUI;
+
+class App extends React.Component {
     render() {
         return (
-          <h2>Hello React</h2>
+            <Button>hello wechat</Button>
         );
     }
-}
+};
 
-React.render(<Hello/>, document.getElementById('content2'));
+ReactDOM.render((
+    <App/>
+), document.getElementById('content'));
