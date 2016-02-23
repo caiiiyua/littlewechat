@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import WeUI from 'react-weui';
 import 'weui';
 
-const {Button, Icon, Article} = WeUI;
+const {Button, Icon, Article, Cells, CellsTitle, CellsTips, Cell, CellHeader, CellBody, CellFooter} = WeUI;
 
 export default class TestButton extends React.Component {
     render() {
@@ -31,6 +31,38 @@ export default class TestButton extends React.Component {
               <h1>Hello article</h1>
               <p>Glad to see you</p>
             </Article>
+
+            <CellsTitle>带说明的列表项</CellsTitle>
+            <Cells>
+                <Cell>
+                    <CellBody>
+                        标题文字
+                    </CellBody>
+                    <CellFooter>
+                        说明文字
+                    </CellFooter>
+                </Cell>
+            </Cells>
+
+            <CellsTitle>带说明、跳转的列表项</CellsTitle>
+            <Cells access>
+                <Cell href="javascript:;">
+                    <CellBody>
+                        标题文字
+                    </CellBody>
+                    <CellFooter>
+                        说明文字
+                    </CellFooter>
+                </Cell>
+                <Cell>
+                    <CellBody>
+                        标题文字
+                    </CellBody>
+                    <CellFooter>
+                        说明文字
+                    </CellFooter>
+                </Cell>
+            </Cells>
           </section>
         );
     }
