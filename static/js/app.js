@@ -6,13 +6,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import WeUI from 'react-weui';
 import 'weui';
+import Question from './components/question/index';
+import TestButton from './components/test/index';
 
 const {Button} = WeUI;
 
 class App extends React.Component {
     render() {
         return (
-            <Button>hello wechat</Button>
+          <TestButton/>
+          // <Question/>
         );
     }
 };
