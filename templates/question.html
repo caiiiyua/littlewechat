@@ -4,35 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
     <link rel="stylesheet" type="text/css" href="/static/css/app.css">
+    <link rel="stylesheet" href="/static/css/weui.min.css"/>
     <title>{{ title }}</title>
 </head>
-<body ontouchstart>
+<body>
 <div id="container">
     {% if name %}
         <h1>Questionnaire with id: {{ qid }} owned by {{ name }}!</h1>
     {% else %}
         <h1>Questionnaire with id: {{ qid }} and no available user!</h1>
     {% endif %}
+    <p id="init_state" display="none">{"a": test, "b": "test2"}</P>
     <div id="content"></div>
-    <div id="content2"></div>
 </div>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/react/0.12.0/react.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/react/0.12.0/JSXTransformer.js"></script>
-<script type="text/jsx">
-
-      /*** @jsx React.DOM */
-
-      var helloWorld = React.createClass({
-        render: function() {
-          return (<h2>Greetings, from Hello World!</h2>)
-        }
-      });
-
-      React.render(
-        React.createElement(helloWorld, null),
-        document.getElementById('content')
-      );
-</script>
 <script src="/static/bundle.js"></script>
 </body>
 </html>
