@@ -66,10 +66,10 @@ def questions(qid):
         question = query.get(qid)
         if question:
             title = question.title
-            logger.debug(type(title))
+            logger.debug(question)
             return render_template('question.html',
-                                   title=question.title, name=wuser.nickname, qid=qid, question_heading=question.title,
-                                   question_content=question.description)
+                                   title=question.title, name=question.creator, qid=qid, question_heading=question.title,
+                                   question_content=question.description, status=question.status)
         else:
             return render_template('question.html', title="Unavailable questionnaire", name="No name", qid=qid)
 

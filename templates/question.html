@@ -13,16 +13,16 @@
 <div id="container" data-role="page">
   <div id="question_header" data-role="header">
     {% if name %}
-        <h2>Questionnaire with id: {{ qid }} owned by {{ name }}!</h2>
+        <h2>{{ title }} by {{ name }} until {{ expired_at }}</h2>
     {% else %}
         <h2>Questionnaire with id: {{ qid }} and no available user!</h2>
     {% endif %}
   </div>
   <div id="question_content" data-role="main" class="ui-content">
     <article class="weui_article">
-      <h1>{question_heading}</h1>
+      <h1>[{{status}}]: {{ question_heading }}</h1>
       <section>
-        <p>{question_content}</p>
+        <p>{{ question_content }}</p>
       </section>
     </article>
   </div>

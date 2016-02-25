@@ -30,7 +30,7 @@ class Questionnaires(Object):
 
     @property
     def description(self):
-        return self.get('desciption')
+        return self.get('description')
     @description.setter
     def description(self, descip):
         return self.set('description', descip)
@@ -76,3 +76,6 @@ class Questionnaires(Object):
     @show_details.setter
     def show_details(self, show):
         return self.set('show_details', show)
+
+    def __repr__(self):
+        return "[" + self.title + ", " + self.creator + ", " + self.status + ", " + self.status + "]"
