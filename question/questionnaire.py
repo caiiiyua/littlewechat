@@ -78,4 +78,4 @@ class Questionnaires(Object):
         return self.set('show_details', show)
 
     def __repr__(self):
-        return "[" + self.title + ", " + self.creator + ", " + self.status + ", " + self.status + "]"
+        return "[" + self.title + ", " + self.creator + ", " + self.status + ", " + self.expired_at + "]"

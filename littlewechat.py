@@ -69,7 +69,7 @@ def questions(qid):
             logger.debug(question)
             return render_template('question.html',
                                    title=question.title, name=question.creator, qid=qid, question_heading=question.title,
-                                   question_content=question.description, status=question.status)
+                                   question_content=question.description, status=question.status, expired_at=question.expired_at)
         else:
             return render_template('question.html', title="Unavailable questionnaire", name="No name", qid=qid)
 
