@@ -8,6 +8,8 @@ import requests
 from leancloud import Query
 import json
 import sys
+from question.questionnaire import Questionnaires
+
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
@@ -60,10 +62,19 @@ def questions(qid):
     wuser = validate_weuser()
     if wuser:
         logger.debug("questionnaire with id: %s and %s" % (qid, wuser.nickname))
-        title = u"{name}'s Questionnaire".format(name=wuser.nickname)
-        logger.debug(type(title))
+        query = Query(Questionnaires)
+        query.equal_to('id', qid)
+        question = query.find()
+        if len(question) > 0:
+            question = question[0]
+            title = question.title
+            logger.debug(type(title))
+            return render_template('question.html',
+                                   title=question.title, name=wuser.nickname, qid=qid, question_heading=question.title,
+                                   question_content=question.description)
+        else:
+            return render_template('question.html', title="Unavailable questionnaire", name="No name", qid=qid)
 
-        return render_template('question.html', title=title, name=wuser.nickname, qid=qid)
     else:
         return render_template('question.html', title="Test", name="No name", qid=qid)
         # redirect_url = wechathandler.get_question_info_url(wechat.conf.appid, qid)

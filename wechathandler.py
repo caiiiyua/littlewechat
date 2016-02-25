@@ -15,6 +15,8 @@ from littlewechat import wechat
 from littlewechat import logger
 from wechat_sdk.messages import TextMessage, ImageMessage, EventMessage
 from leancloud import Query
+from question import questionnaire
+import datetime
 
 def get_question_url(appid, qid):
     qurl = 'http://inaiping.wang/questions/' + str(qid)
@@ -30,14 +32,30 @@ def get_question_info_url(appid, qid):
     logger.debug(authorize_url)
     return authorize_url
 
+def generate_question(userinfo, title, description):
+    question = questionnaire.Questionnaires()
+    question.creator = userinfo.get('nickname')
+    question.answer_count = 0
+    question.category = "default"
+    question.expired_at = datetime.datetime.now() + datetime.timedelta(hours=24)
+    question.modify_answer = True
+    question.show_details = True
+    question.description = description
+    question.title = title
+    question.status = "open"
+    question.save()
+    return question
+
+
 def text_handler(content, userid):
     resp = content
     if 'survey' == content:
         userinfo = wechat.get_user_info(userid)
+        question = generate_question(userinfo, "周末约吗?", "周五晚上去打麻将吗?")
         q = {}
-        q['title'] = 'questionnaire'
-        q['description'] = userinfo
-        q['url'] = get_question_url(wechat.conf.appid, 1)
+        q['title'] = '周末约吗?'
+        q['description'] = "周五晚上去打麻将吗?"
+        q['url'] = get_question_url(wechat.conf.appid, question.id)
         return  wechat.response_news([q])
     elif 'test' == content:
         articles = [{

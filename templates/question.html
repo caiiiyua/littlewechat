@@ -3,20 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <script src="http://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/static/css/app.css">
     <link rel="stylesheet" href="/static/css/weui.min.css"/>
     <title>{{ title }}</title>
 </head>
 <body>
-<div id="container">
+<div id="container" data-role="page">
+  <div id="question_header" data-role="header">
     {% if name %}
-        <h1>Questionnaire with id: {{ qid }} owned by {{ name }}!</h1>
+        <h2>Questionnaire with id: {{ qid }} owned by {{ name }}!</h2>
     {% else %}
-        <h1>Questionnaire with id: {{ qid }} and no available user!</h1>
+        <h2>Questionnaire with id: {{ qid }} and no available user!</h2>
     {% endif %}
-    <p id="init_state" display="none">{"a": test, "b": "test2"}</P>
-    <div id="content"></div>
+  </div>
+  <div id="question_content" data-role="main" class="ui-content">
+    <article class="weui_article">
+      <h1>{question_heading}</h1>
+      <section>
+        <p>{question_content}</p>
+      </section>
+    </article>
+  </div>
+  <div id="question_footer" data-role="footer">
+    <a href="javascript:;" class="weui_btn weui_btn_primary">OK</a>
+    <a href="javascript:;" class="weui_btn weui_btn_warn">Denied</a>
+  </div>
+  <div id="content"></div>
+
 </div>
+
 <script src="/static/bundle.js"></script>
 </body>
 </html>
