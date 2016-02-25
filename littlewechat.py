@@ -63,10 +63,8 @@ def questions(qid):
     if wuser:
         logger.debug("questionnaire with id: %s and %s" % (qid, wuser.nickname))
         query = Query(Questionnaires)
-        query.equal_to('id', qid)
-        question = query.find()
-        if len(question) > 0:
-            question = question[0]
+        question = query.get(qid)
+        if question:
             title = question.title
             logger.debug(type(title))
             return render_template('question.html',
