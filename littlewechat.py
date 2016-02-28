@@ -93,7 +93,7 @@ def validate_weuser():
     authorize_result = json.loads(resp.text)
     openid = authorize_result.get('openid')
     # userinfo = wechat.get_user_info(openid)
-    logger.debug(openid)
+    logger.debug("wechat openId: " + openid)
     from weuser.weusers import WeUsers
     query = Query(WeUsers)
     query.equal_to('openid', openid)
