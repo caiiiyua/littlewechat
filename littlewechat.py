@@ -9,6 +9,7 @@ from leancloud import Query
 import json
 import sys
 from question.questionnaire import Questionnaires
+from question.answer import Answers
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -78,6 +79,17 @@ def questions(qid):
         # redirect_url = wechathandler.get_question_info_url(wechat.conf.appid, qid)
         # logger.debug("questionnaire with id: %s and no available user" % qid)
         # return redirect(redirect_url)
+
+@app.route('/answers', methods=["POST", "PUT"])
+def answers():
+    logger.debug("request data: " + request.data)
+    # answer = Answers()
+    # answer.qid = ""
+    # answer.userid = ""
+    # answer.value = ""
+    # answer.save()
+    # return json.loads(answer)
+    pass
 
 
 def validate_weuser():
