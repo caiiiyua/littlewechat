@@ -1,0 +1,24 @@
+{
+  "name": "littlewechat",
+  "description": "Little wechat server",
+  "main": "webpack.config.js",
+  "authors": [
+    "caiiiyua"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "wechat"
+  ],
+  "homepage": "https://github.com/caiiiyua/littlewechat",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^2.2.1"
+  }
+}
