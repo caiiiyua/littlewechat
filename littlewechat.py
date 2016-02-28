@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-from flask import Flask, request, redirect, render_template
+from flask import Flask, request, redirect, render_template, make_response
 from wechat_sdk import WechatConf
 from wechat_sdk import WechatBasic
 import wechathandler
@@ -68,9 +68,13 @@ def questions(qid):
         if question:
             title = question.title
             logger.debug(question)
-            return render_template('question.html',
+            resp = make_response(render_template('question.html',
                                    title=question.title, name=question.creator, qid=qid, question_heading=question.title,
-                                   question_content=question.description, status=question.status, expired_at=question.expired_at)
+                                   question_content=question.description, status=question.status, expired_at=question.expired_at,
+                                   show_details=question.show_details))
+            # setcookie for user id
+            resp.set_cookie('uid', wuser.id)
+            return resp
         else:
             return render_template('question.html', title="Unavailable questionnaire", name="No name", qid=qid)
 
@@ -80,9 +84,11 @@ def questions(qid):
         # logger.debug("questionnaire with id: %s and no available user" % qid)
         # return redirect(redirect_url)
 
-@app.route('/answers', methods=["POST", "PUT"])
+@app.route('/answers', methods=["POST"])
 def answers():
-    logger.debug("request data: " + request.data)
+    uid = request.cookies.get('uid')
+    logger.debug('user id in cookie: ' + str(uid))
+    logger.debug("request data: %s", request.data)
     # answer = Answers()
     # answer.qid = ""
     # answer.userid = ""
@@ -105,7 +111,10 @@ def validate_weuser():
     authorize_result = json.loads(resp.text)
     openid = authorize_result.get('openid')
     # userinfo = wechat.get_user_info(openid)
-    logger.debug("wechat openId: " + openid)
+    if openid:
+        logger.debug("wechat openId: " + openid)
+    else:
+        logger.debug("wechat openid invalidated!!!")
     from weuser.weusers import WeUsers
     query = Query(WeUsers)
     query.equal_to('openid', openid)

@@ -27,9 +27,18 @@
     </article>
   </div>
   <div id="question_footer" data-role="footer">
-    <a href="javascript:;" class="weui_btn weui_btn_primary">OK</a>
-    <a href="javascript:;" class="weui_btn weui_btn_warn">Denied</a>
+    <a href="javascript:;" class="weui_btn weui_btn_primary" id="submit_0">OK</a>
+    <a href="javascript:;" class="weui_btn weui_btn_warn" id="submit_1">Denied</a>
   </div>
+
+  {% if answers %}
+    <div id="answer_header" class="weui_cells_title">{{ answers_count }} people joined.</div>
+    {% if show_details %}
+      {% include 'answers.html' %}
+    {% endif %}
+  {% else %}
+  <div id="answer_header" class="weui_cells_title">No one joined.</div>
+  {% endif %}
   <div id="content"></div>
 
 </div>
