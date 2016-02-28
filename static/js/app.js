@@ -3,7 +3,7 @@
  */
 
 function doAnswer(answer) {
-  return $.post("inaiping.wang/answers",
+  return $.post("http://inaiping.wang/answers",
   {
     "answer": answer,
   },
@@ -15,9 +15,11 @@ function doAnswer(answer) {
 
  $(document).ready(function() {
    $("#submit_0").click(function() {
+     alert("submit_0 was clicked")
      doAnswer(0);
    });
    $("#submit_1").click(function() {
+     alert("submit_1 was clicked")
      doAnswer(1);
    });
  });

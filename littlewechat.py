@@ -95,7 +95,7 @@ def answers():
     # answer.value = ""
     # answer.save()
     # return json.loads(answer)
-    pass
+    return request.data
 
 
 def validate_weuser():
