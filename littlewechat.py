@@ -82,6 +82,7 @@ def questions(qid):
                                    show_details=question.show_details))
             # setcookie for user id
             resp.set_cookie('uid', wuser.id)
+            resp.set_cookie('qid', qid)
             return resp
         else:
             return render_template('question.html', title="Unavailable questionnaire", name="No name", qid=qid)
@@ -95,15 +96,34 @@ def questions(qid):
 @app.route('/answers', methods=["POST"])
 def answers():
     uid = request.cookies.get('uid')
+    qid = request.cookies.get('qid')
     logger.debug('user id in cookie: ' + str(uid))
+    wuser = None
+    if uid:
+        from weuser.weusers import WeUsers
+        query = Query(WeUsers)
+        wuser = query.get(uid)
     logger.debug("request data: %s form: %s", request.data, request.form)
-    # answer = Answers()
-    # answer.qid = ""
-    # answer.userid = ""
-    # answer.value = ""
-    # answer.save()
-    # return json.loads(answer)
-    return request.data
+    if wuser and qid:
+        query = Query(Answers)
+        query.equal_to('qid', qid)
+        query.equal_to('uid', uid)
+        answer = query.first()
+        if not answer:
+            answer = Answers()
+            answer.qid = qid
+            answer.userid = uid
+            answer.value = request.form.get('answer')
+            answer.save()
+            logger.debug("answered as %s", answer)
+        else:
+            """
+            check modify answer for question
+            """
+            logger.debug("already answered %s", answer)
+            pass
+        return json.loads(answer)
+    return request.form
 
 
 def validate_weuser():
