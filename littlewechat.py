@@ -66,8 +66,7 @@ def questions(qid):
     if uid:
         from weuser.weusers import WeUsers
         query = Query(WeUsers)
-        query.get(uid)
-        wuser = query.find()
+        wuser = query.get(uid)
     if not wuser:
         wuser = validate_weuser()
     if wuser:
