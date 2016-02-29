@@ -108,7 +108,11 @@ def answers():
         query = Query(Answers)
         query.equal_to('qid', qid)
         query.equal_to('uid', uid)
-        answer = query.first()
+        answer = None
+        try:
+            answer = query.first()
+        except leancloud.LeanCloudError:
+            logger.debug("Need to create table for answer first")
         if not answer:
             answer = Answers()
             answer.qid = qid
