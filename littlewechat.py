@@ -76,10 +76,13 @@ def questions(qid):
         if question:
             title = question.title
             logger.debug(question)
+            answer_query = Query(Answers)
+            answer_query.equal_to('qid', qid)
+            answers = answer_query.find()
             resp = make_response(render_template('question.html',
                                    title=question.title, name=question.creator, qid=qid, question_heading=question.title,
                                    question_content=question.description, status=question.status, expired_at=question.expired_at,
-                                   show_details=question.show_details))
+                                   show_details=question.show_details, answers=answers))
             # setcookie for user id
             resp.set_cookie('uid', wuser.id)
             resp.set_cookie('qid', qid)
