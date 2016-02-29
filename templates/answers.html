@@ -1,6 +1,15 @@
 <div id="answer_container">
   {% if answers %}
   <div id="answers" class="weui_cells">
+    {% for userid, qid, value in answers.items %}
+    <div class="weui_cell">
+      <div class="weui_cell_hd"><img src="{{userid}}" alt="" style="width:20px;margin-right:5px;display:block"></div>
+      <div class="weui_cell_bd weui_cell_primary">
+          <p>{{qid}}</p>
+      </div>
+      <div class="weui_cell_ft">{{value}}</div>
+    </div>
+    {% endfor %}
     {% for owner, owner_thumbnail, answer in answers.items %}
     <div class="weui_cell">
       <div class="weui_cell_hd"><img src="{{owner_thumbnail}}" alt="" style="width:20px;margin-right:5px;display:block"></div>

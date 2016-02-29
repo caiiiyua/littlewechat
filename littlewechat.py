@@ -82,7 +82,7 @@ def questions(qid):
             resp = make_response(render_template('question.html',
                                    title=question.title, name=question.creator, qid=qid, question_heading=question.title,
                                    question_content=question.description, status=question.status, expired_at=question.expired_at,
-                                   show_details=question.show_details, answers=answers))
+                                   show_details=question.show_details, answers=answers, answer_count=len(answers)))
             # setcookie for user id
             resp.set_cookie('uid', wuser.id)
             resp.set_cookie('qid', qid)
