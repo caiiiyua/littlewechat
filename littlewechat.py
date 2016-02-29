@@ -60,7 +60,16 @@ def little_wechat():
 @app.route('/questions/<qid>', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def questions(qid):
     logger.debug(request.args)
-    wuser = validate_weuser()
+    uid = request.cookies.get('uid')
+    logger.debug('user id in cookie: ' + str(uid))
+    wuser = None
+    if uid:
+        from weuser.weusers import WeUsers
+        query = Query(WeUsers)
+        query.get(uid)
+        wuser = query.find()
+    if not wuser:
+        wuser = validate_weuser()
     if wuser:
         logger.debug("questionnaire with id: %s and %s" % (qid, wuser.nickname))
         query = Query(Questionnaires)
@@ -88,7 +97,7 @@ def questions(qid):
 def answers():
     uid = request.cookies.get('uid')
     logger.debug('user id in cookie: ' + str(uid))
-    logger.debug("request data: %s", request.data)
+    logger.debug("request data: %s form: %s", request.data, request.form)
     # answer = Answers()
     # answer.qid = ""
     # answer.userid = ""
