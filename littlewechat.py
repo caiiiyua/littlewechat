@@ -107,7 +107,7 @@ def answers():
     if wuser and qid:
         query = Query(Answers)
         query.equal_to('qid', qid)
-        query.equal_to('uid', uid)
+        query.equal_to('userid', uid)
         answer = None
         try:
             answer = query.first()
@@ -126,7 +126,7 @@ def answers():
             """
             logger.debug("already answered %s", answer)
             pass
-        return json.loads(answer)
+        return answer
     return request.form
 
 
