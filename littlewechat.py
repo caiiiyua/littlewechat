@@ -136,7 +136,7 @@ def answers():
         answers = answers_query.find()
         answer_count = len(answers)
 
-        return {"answers":answers, "answers_count": answer_count}
+        return render_template("answers.html", answers=answers, answers_count=answer_count)
 
 def validate_weuser():
     code = request.args.get('code')
