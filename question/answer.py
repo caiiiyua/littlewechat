@@ -35,5 +35,5 @@ class Answers(Object):
     def value(self, answer):
         return self.set('value', answer)
 
-    def __repr__(self):
+    def __str__(self):
         return "[" + str(self.value) + ", " + self.qid + ", " + self.userid + ", " + str(self.updated_at) + "]"
