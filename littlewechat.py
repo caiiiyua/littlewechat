@@ -135,7 +135,7 @@ def answers():
         answers_query.equal_to('qid', qid)
         answers = answers_query.find()
         answer_count = len(answers)
-        return answers, answer_count
+        return json.dumps({"answers":answers, "answers_count": answer_count})
 
 def validate_weuser():
     code = request.args.get('code')

@@ -16,7 +16,10 @@ function doAnswer(answer) {
  $(document).ready(function() {
    $("#submit_0").click(function() {
      alert("submit_0 was clicked")
-     $("#answer_wapper").html = doAnswer(0);
+     $("#answer_wapper").load("http://inaiping.wang/answers",
+     {
+       "answer": 0,
+     });
    });
    $("#submit_1").click(function() {
      alert("submit_1 was clicked")
