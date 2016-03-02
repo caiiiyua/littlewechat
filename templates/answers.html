@@ -1,22 +1,16 @@
 <div id="answer_container">
+  <p>lalala</p>
   {% if answers %}
+  <p>lalalala {{answers}} {{answers[0]}}</p>
   <div id="answers" class="weui_cells">
-    {% for userid, qid, value in answers.items %}
+    {% for answer in answers %}
+    <p>lalalala1 {{answers}} {{answers[0]}}</p>
     <div class="weui_cell">
-      <div class="weui_cell_hd"><img src="{{userid}}" alt="" style="width:20px;margin-right:5px;display:block"></div>
+      <div class="weui_cell_hd"><img src="{{answer.headimgurl}}" alt="" style="width:20px;margin-right:5px;display:block"></div>
       <div class="weui_cell_bd weui_cell_primary">
-          <p>{{qid}}</p>
+          <p>{{answer.voter}}</p>
       </div>
-      <div class="weui_cell_ft">{{value}}</div>
-    </div>
-    {% endfor %}
-    {% for owner, owner_thumbnail, answer in answers.items %}
-    <div class="weui_cell">
-      <div class="weui_cell_hd"><img src="{{owner_thumbnail}}" alt="" style="width:20px;margin-right:5px;display:block"></div>
-      <div class="weui_cell_bd weui_cell_primary">
-          <p>{{owner}}</p>
-      </div>
-      <div class="weui_cell_ft">{{answer}}</div>
+      <div class="weui_cell_ft">{{answer.value}}</div>
     </div>
     {% endfor %}
   {% endif %}

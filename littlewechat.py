@@ -61,6 +61,7 @@ def little_wechat():
 def questions(qid):
     logger.debug(request.args)
     uid = request.cookies.get('uid')
+    # uid = request.args.get("uid")
     logger.debug('user id in cookie: ' + str(uid))
     wuser = None
     if uid:
@@ -82,7 +83,7 @@ def questions(qid):
             resp = make_response(render_template('question.html',
                                    title=question.title, name=question.creator, qid=qid, question_heading=question.title,
                                    question_content=question.description, status=question.status, expired_at=question.expired_at,
-                                   show_details=question.show_details, answers=answers, answer_count=len(answers)))
+                                   show_details=question.show_details, answers=answers, answers_count=len(answers)))
             # setcookie for user id
             resp.set_cookie('uid', wuser.id)
             resp.set_cookie('qid', qid)
@@ -121,6 +122,8 @@ def answers():
             answer.qid = qid
             answer.userid = uid
             answer.value = request.form.get('answer')
+            answer.voter = wuser.nickname
+            answer.headimg = wuser.headimgurl
             answer.save()
             logger.debug("answered as %s", answer)
         else:

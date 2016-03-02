@@ -35,5 +35,19 @@ class Answers(Object):
     def value(self, answer):
         return self.set('value', answer)
 
-    def __str__(self):
-        return "[" + str(self.value) + ", " + self.qid + ", " + self.userid + ", " + str(self.updated_at) + "]"
+    @property
+    def voter(self):
+        return self.get('voter')
+    @voter.setter
+    def voter(self, voter):
+        return self.set('voter', voter)
+
+    @property
+    def headimg(self):
+        return self.get('headimg')
+    @headimg.setter
+    def headimg(self, headimg):
+        return self.set('headimg', headimg)
+    #
+    # def __str__(self):
+    #     return "[" + str(self.value) + ", " + self.qid + ", " + self.userid + ", " + str(self.updated_at) + "]"
