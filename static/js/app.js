@@ -9,7 +9,6 @@ function doAnswer(answer) {
   },
   function(data, status) {
     // alert("Data:" + data + "\nStatus: " + status)
-    window.location.reload()
     return data
   });
 }

@@ -128,7 +128,6 @@ def answers():
             check modify answer for question
             """
             logger.debug("already answered %s", answer)
-            pass
         answers_query = Query(Answers)
         answers_query.equal_to('qid', qid)
         answers = answers_query.find()
