@@ -17,10 +17,10 @@ function doAnswer(answer) {
  $(document).ready(function() {
    $("#submit_0").click(function() {
      alert("submit_0 was clicked")
-     doAnswer(0);
+     $("#answer_wapper").html = doAnswer(0);
    });
    $("#submit_1").click(function() {
      alert("submit_1 was clicked")
-     doAnswer(1);
+     $("#answer_wapper").html = doAnswer(1);
    });
  });

@@ -96,7 +96,7 @@ def questions(qid):
         # logger.debug("questionnaire with id: %s and no available user" % qid)
         # return redirect(redirect_url)
 
-@app.route('/answers', methods=["POST"])
+@app.route('/answers', methods=["GET", "POST"])
 def answers():
     uid = request.cookies.get('uid')
     qid = request.cookies.get('qid')
@@ -129,9 +129,11 @@ def answers():
             """
             logger.debug("already answered %s", answer)
             pass
-        return answer
-    return request.form
-
+        answers_query = Query(Answers)
+        answers_query.equal_to('qid', qid)
+        answers = answers_query.find()
+        answer_count = len(answers)
+        return answers, answer_count
 
 def validate_weuser():
     code = request.args.get('code')

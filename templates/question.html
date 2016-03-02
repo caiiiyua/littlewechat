@@ -31,14 +31,16 @@
     <a href="javascript:;" class="weui_btn weui_btn_warn" id="submit_1">Denied</a>
   </div>
 
+  <div id="answer_wrapper">
   {% if answers %}
     <div id="answer_header" class="weui_cells_title">{{ answers_count }} people joined.</div>
     {% if show_details %}
       {% include 'answers.html' %}
     {% endif %}
   {% else %}
-  <div id="answer_header" class="weui_cells_title">No one joined.</div>
+    <div id="answer_header" class="weui_cells_title">No one joined.</div>
   {% endif %}
+  </div>
   <div id="content"></div>
 
 </div>
