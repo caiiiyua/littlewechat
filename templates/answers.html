@@ -1,5 +1,6 @@
 <div id="answer_container">
   {% if answers %}
+  <div id="answer_header" class="weui_cells_title">{{ answers_count }} people joined.</div>
   <div id="answers" class="weui_cells">
     {% for answer in answers %}
     <div class="weui_cell">

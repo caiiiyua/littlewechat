@@ -9,21 +9,17 @@ function doAnswer(answer) {
   },
   function(data, status) {
     // alert("Data:" + data + "\nStatus: " + status)
+    $("#answer_wrapper").html(data);
     return data
   });
 }
 
  $(document).ready(function() {
    $("#submit_0").click(function() {
-    //  alert("submit_0 was clicked")
-    //  $("#answer_wapper").load("http://inaiping.wang/answers",
-    //  {
-    //    "answer": 0,
-    //  });
-     $("#answer_wapper").html = doAnswer(0);
+     $("#answer_wrapper").html(doAnswer(0));
    });
    $("#submit_1").click(function() {
-     alert("submit_1 was clicked")
-     $("#answer_wapper").html = doAnswer(1);
+    //  alert("submit_1 was clicked")
+     $("#answer_wrapper").html(doAnswer(1));
    });
  });

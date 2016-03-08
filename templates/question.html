@@ -32,7 +32,6 @@
 
   <div id="answer_wrapper">
   {% if answers %}
-    <div id="answer_header" class="weui_cells_title">{{ answers_count }} people joined.</div>
     {% if show_details %}
       {% include 'answers.html' %}
     {% endif %}
@@ -40,8 +39,6 @@
     <div id="answer_header" class="weui_cells_title">No one joined.</div>
   {% endif %}
   </div>
-  <div id="content"></div>
-
 </div>
 
 <script src="/static/bundle.js"></script>
