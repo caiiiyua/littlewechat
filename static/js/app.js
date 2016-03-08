@@ -8,7 +8,7 @@ function doAnswer(answer) {
     "answer": answer,
   },
   function(data, status) {
-    // alert("Data:" + data + "\nStatus: " + status)
+    alert("Data:" + data + "\nStatus: " + status)
     $("#answer_wrapper").html(data);
     return data
   });
@@ -16,10 +16,8 @@ function doAnswer(answer) {
 
  $(document).ready(function() {
    $("#submit_0").click(function() {
-     $("#answer_wrapper").html(doAnswer(0));
    });
    $("#submit_1").click(function() {
     //  alert("submit_1 was clicked")
-     $("#answer_wrapper").html(doAnswer(1));
    });
  });
