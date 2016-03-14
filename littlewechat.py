@@ -10,6 +10,7 @@ import json
 import sys
 from question.questionnaire import Questionnaires
 from question.answer import Answers
+from weuser.weusers import WeUsers
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -65,9 +66,11 @@ def questions(qid):
     logger.debug('user id in cookie: ' + str(uid))
     wuser = None
     if uid:
-        from weuser.weusers import WeUsers
-        query = Query(WeUsers)
-        wuser = query.get(uid)
+        try:
+            query = Query(WeUsers)
+            wuser = query.get(uid)
+        except leancloud.LeanCloudError:
+            logger.warning("WeUser not found via uid %s", uid)
     if not wuser:
         wuser = validate_weuser()
     if wuser:
@@ -104,9 +107,11 @@ def answers():
     logger.debug('user id in cookie: ' + str(uid))
     wuser = None
     if uid:
-        from weuser.weusers import WeUsers
-        query = Query(WeUsers)
-        wuser = query.get(uid)
+        try:
+            query = Query(WeUsers)
+            wuser = query.get(uid)
+        except leancloud.LeanCloudError:
+            logger.warning("WeUser not found via uid %s", uid)
     logger.debug("request data: %s form: %s", request.data, request.form)
     if wuser and qid:
         query = Query(Answers)
@@ -162,16 +167,18 @@ def validate_weuser():
         logger.debug("wechat openId: " + openid)
     else:
         logger.debug("wechat openid invalidated!!!")
-    from weuser.weusers import WeUsers
-    query = Query(WeUsers)
-    query.equal_to('openid', openid)
-    wuser = query.find()
-    if len(wuser) > 0:
-        wuser = wuser[0]
-    else:
-        logger.debug('try to retrieve userinfo')
-        wuser = wechathandler.retrieve_weuser(openid)
-    return wuser
+    try:
+        query = Query(WeUsers)
+        query.equal_to('openid', openid)
+        wuser = query.find()
+        if len(wuser) > 0:
+            wuser = wuser[0]
+        else:
+            logger.debug('try to retrieve userinfo')
+            wuser = wechathandler.retrieve_weuser(openid)
+        return wuser
+    except leancloud.LeanCloudError:
+        logger.warning("WeUser not found via uid %s", uid)
 
 
 if __name__ == '__main__':
