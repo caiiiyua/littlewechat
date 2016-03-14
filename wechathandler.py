@@ -57,6 +57,14 @@ def text_handler(content, userid):
         q['description'] = "周五晚上去打麻将吗?"
         q['url'] = get_question_url(wechat.conf.appid, question.id)
         return  wechat.response_news([q])
+    elif 'test2' == content:
+        userinfo = wechat.get_user_info(userid)
+        question = generate_question(userinfo, "周末约吗?", "周六晚上去打麻将吗?")
+        q = {}
+        q['title'] = '周末约吗?'
+        q['description'] = "周六晚上去打麻将吗?"
+        q['url'] = get_question_info_url(wechat.conf.appid, question.id)
+        return  wechat.response_news([q])
     elif 'test' == content:
         articles = [{
             'title': u'第一条新闻标题',

@@ -18,9 +18,11 @@ import logging
 from logging import handlers
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('wechat')
-loghandler = logging.StreamHandler()
+stdhandler = logging.StreamHandler(sys.stdout)
+loghandler = logging.TimedRotatingFileHandler('logs/server.log', 'd', 1, 5)
 loghandler.setFormatter(logging.Formatter('[%(asctime)s] [%(levelname)s] [%(message)s]'))
 logger.addHandler(loghandler)
+logger.addHandler(stdhandler)
 logger.debug(sys.getdefaultencoding())
 
 app = Flask(__name__)
@@ -136,6 +138,13 @@ def answers():
         answers = answers_query.find()
         answer_count = len(answers)
 
+        return render_template("answers.html", answers=answers, answers_count=answer_count)
+    else:
+        pass
+        answers_query = Query(Answers)
+        answers_query.equal_to('qid', "56def37b8ac2470056ece82d")
+        answers = answers_query.find()
+        answer_count = len(answers)
         return render_template("answers.html", answers=answers, answers_count=answer_count)
 
 def validate_weuser():
