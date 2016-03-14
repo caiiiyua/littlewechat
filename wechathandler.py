@@ -143,8 +143,7 @@ def handler(body, signature, timestamp, nonce):
     return response
 
 def get_user_info(openid, access_token):
-    url = str.format('https://api.weixin.qq.com/sns/userinfo?access_token=%s&openid=%s&lang=zh_CN' %
-                               (access_token, openid))
+    url = 'https://api.weixin.qq.com/sns/userinfo?access_token=' + access_token + '&openid=' + openid + '&lang=zh_CN'
     resp = requests.get(url)
     logger.debug(type(resp.text))
     authorize_result = json.loads(resp.text)
