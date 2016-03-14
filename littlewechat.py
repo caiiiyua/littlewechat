@@ -18,12 +18,10 @@ import logging
 from logging import handlers
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('wechat')
-stdhandler = logging.StreamHandler(sys.stdout)
-loghandler = logging.TimedRotatingFileHandler('logs/server.log', 'd', 1, 5)
+loghandler = logging.handlers.TimedRotatingFileHandler('logs/server.log', 'd', 1, 5)
 loghandler.setFormatter(logging.Formatter('[%(asctime)s] [%(levelname)s] [%(message)s]'))
 logger.addHandler(loghandler)
-logger.addHandler(stdhandler)
-logger.debug(sys.getdefaultencoding())
+# logger.debug(sys.getdefaultencoding())
 
 app = Flask(__name__)
 # init leancloud sdk
