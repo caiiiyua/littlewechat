@@ -159,13 +159,12 @@ def validate_weuser():
     else:
         return None
     resp = requests.get(url)
-    logger.debug(type(resp.text))
     authorize_result = json.loads(resp.text)
     openid = authorize_result.get('openid')
     token = authorize_result.get('access_token')
     # userinfo = wechat.get_user_info(openid)
     if openid:
-        logger.debug("wechat openId: " + openid)
+        logger.debug("wechat openId: %s, token: %s", openid, str(token))
     else:
         logger.debug("wechat openid invalidated!!!")
     try:

@@ -148,7 +148,7 @@ def get_user_info(openid, access_token):
     resp = requests.get(url)
     logger.debug(type(resp.text))
     authorize_result = json.loads(resp.text)
-    logger.debug("get user info: %s", authorize_result)
+    logger.debug("get user info: %s", str(authorize_result))
 
 def retrieve_weuser(openid):
     userinfo = wechat.get_user_info(openid)
