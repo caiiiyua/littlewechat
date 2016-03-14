@@ -10,11 +10,14 @@
 @file: wechathandler.py
 @time: 16/2/17 下午11:10
 """
+import json
+import requests
 
 from littlewechat import wechat
 from littlewechat import logger
 from wechat_sdk.messages import TextMessage, ImageMessage, EventMessage
 from leancloud import Query
+from weuser.weusers import WeUsers
 from question import questionnaire
 import datetime
 
@@ -139,11 +142,17 @@ def handler(body, signature, timestamp, nonce):
         response = wechat.response_text('unsupported yet :-(')
     return response
 
+def get_user_info(openid, access_token):
+    url = str.format('https://api.weixin.qq.com/sns/userinfo?access_token=%s&openid=%s&lang=zh_CN' %
+                               (access_token, openid))
+    resp = requests.get(url)
+    logger.debug(type(resp.text))
+    authorize_result = json.loads(resp.text)
+    logger.debug("get user info: %s", authorize_result)
 
 def retrieve_weuser(openid):
     userinfo = wechat.get_user_info(openid)
     logger.debug(userinfo)
-    from weuser.weusers import WeUsers
     query = Query(WeUsers)
     query.equal_to('openid', userinfo.get('openid'))
     wuser = query.find()

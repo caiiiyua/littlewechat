@@ -65,12 +65,12 @@ def questions(qid):
     # uid = request.args.get("uid")
     logger.debug('user id in cookie: ' + str(uid))
     wuser = None
-    if uid:
-        try:
-            query = Query(WeUsers)
-            wuser = query.get(uid)
-        except leancloud.LeanCloudError:
-            logger.warning("WeUser not found via uid %s", uid)
+    # if uid:
+    #     try:
+    #         query = Query(WeUsers)
+    #         wuser = query.get(uid)
+    #     except leancloud.LeanCloudError:
+    #         logger.warning("WeUser not found via uid %s", uid)
     if not wuser:
         wuser = validate_weuser()
     if wuser:
@@ -162,6 +162,7 @@ def validate_weuser():
     logger.debug(type(resp.text))
     authorize_result = json.loads(resp.text)
     openid = authorize_result.get('openid')
+    token = authorize_result.get('access_token')
     # userinfo = wechat.get_user_info(openid)
     if openid:
         logger.debug("wechat openId: " + openid)
@@ -175,10 +176,11 @@ def validate_weuser():
             wuser = wuser[0]
         else:
             logger.debug('try to retrieve userinfo')
-            wuser = wechathandler.retrieve_weuser(openid)
+            wechathandler.get_user_info(openid, token)
+            # wuser = wechathandler.retrieve_weuser(openid)
         return wuser
     except leancloud.LeanCloudError:
-        logger.warning("WeUser not found via uid %s", uid)
+        logger.warning("WeUser not found")
 
 
 if __name__ == '__main__':
